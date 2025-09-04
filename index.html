@@ -476,21 +476,15 @@
           const whatsappUrl = `https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!`;
           const encodedUrl = encodeURIComponent(whatsappUrl);
 
-          // Usar API do QR Server que é mais confiável
           const qrCodeDataUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodedUrl}&format=png&margin=10&ecc=H`;
-
-          console.log('Gerando QR Code para:', whatsappUrl);
-          console.log('URL do QR Code:', qrCodeDataUrl);
 
           // Gerar assinatura com QR Code
           generateSignatureHTML(qrCodeDataUrl);
         } catch (error) {
           console.error('Erro ao gerar QR Code:', error);
-          // Gerar assinatura sem QR Code em caso de erro
           generateSignatureHTML();
         }
       } else {
-        // Gerar assinatura sem QR Code
         generateSignatureHTML();
       }
     }
@@ -525,7 +519,6 @@
       selection.removeAllRanges();
       selection.addRange(range);
 
-      // Tentar copiar
       try {
         document.execCommand('copy');
 
