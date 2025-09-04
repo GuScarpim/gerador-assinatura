@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Assinatura de Email - Overlabs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #00beb2 0%, #0e4b4e 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .form-section {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .preview-section {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Poppins', Arial, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #00CED1;
+    }
+
+    select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Poppins', Arial, sans-serif;
+      transition: border-color 0.3s ease;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #00CED1;
+    }
+
+    .btn {
+      background: #00beb2;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #00948d;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      background: #00cfbf;
+    }
+
+    .copy-btn {
+      background: #0e4b4e;
+      margin-top: 20px;
+    }
+
+    .copy-btn:hover {
+      background: #00948d;
+    }
+
+    .signature-preview {
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      padding: 20px;
+      background: white;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .signature-preview table {
+      max-width: 750px;
+    }
+
+    .qr-code-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .qr-code-container canvas {
+      border: 2px solid #00CED1;
+      border-radius: 8px;
+      padding: 5px;
+      background: white;
+    }
+
+    .logo-bottom-right {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .logo-bottom-right img {
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+      transition: opacity 0.3s ease;
+      width: 200px;
+      height: auto;
+    }
+
+    .logo-bottom-right img:hover {
+      opacity: 1 !important;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .form-section,
+      .preview-section {
+        padding: 20px;
+      }
+
+      .logo-bottom-right {
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Formulário -->
+    <div class="form-section">
+      <h1>Gerador de Assinatura</h1>
+
+      <form id="signatureForm">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="cargo">Cargo</label>
+          <input type="text" id="cargo" name="cargo" placeholder="Ex: Desenvolvedor Frontend" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone WhatsApp</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 5511960625389" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="seu.email@overlabs.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="logo">Logo</label>
+          <select id="logo" name="logo" required>
+            <option value="black">Logo Preto</option>
+            <option value="tiffany">Logo Tiffany</option>
+            <option value="white">Logo Branco</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="qrCode">QR Code WhatsApp</label>
+          <select id="qrCode" name="qrCode" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn" id="generateBtn">Gerar Assinatura</button>
+      </form>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-section">
+      <h1>Preview da Assinatura</h1>
+
+      <div class="signature-preview" id="signaturePreview">
+        <p style="text-align: center; color: #666; font-style: italic;">
+          Preencha o formulário para ver a preview da sua assinatura
+        </p>
+      </div>
+
+      <button class="btn copy-btn" id="copyBtn" style="display: none;">Copiar Assinatura</button>
+    </div>
+  </div>
+
+  <!-- Logo no canto inferior direito -->
+  <div class="logo-bottom-right">
+    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/OverLabsWhite.png?raw=true"
+      alt="Overlabs Logo">
+  </div>
+
+  <script>
+    document.getElementById('signatureForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      generateSignature();
+    });
+
+    async function generateSignature() {
+      const generateBtn = document.getElementById('generateBtn');
+      const originalText = generateBtn.textContent;
+
+      // Mostrar loading
+      generateBtn.textContent = 'Carregando...';
+      generateBtn.disabled = true;
+
+      const nome = document.getElementById('nome').value;
+      const cargo = document.getElementById('cargo').value;
+      const telefone = document.getElementById('telefone').value;
+      const email = document.getElementById('email').value;
+      const logo = document.getElementById('logo').value;
+      const includeQRCode = document.getElementById('qrCode').value === 'true';
+
+      // Função para gerar a assinatura
+      const generateSignatureHTML = (qrCodeDataUrl = null) => {
+        // Determinar a URL do logo baseado na seleção
+        let logoUrl;
+        switch (logo) {
+          case 'black':
+            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/black.png?raw=true';
+            break;
+          case 'tiffany':
+            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/tiffany.png?raw=true';
+            break;
+          case 'white':
+            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/white.png?raw=true';
+            break;
+          default:
+            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/black.png?raw=true';
+        }
+
+        // Gerar HTML da assinatura
+        const signatureHTML = `
+          <table cellpadding="0" cellspacing="0" border="0" style="width: auto; max-width: 750px; border-collapse: collapse;">
+            <tr>
+              <td style="vertical-align: middle; text-align: center;">
+                <img src="${logoUrl}"
+                  alt="Overlabs Logo" style="width: 200px; height: auto; display: block;">
+              </td>
+
+              <td style="width: 40px; background-color: #FFFFFF; vertical-align: middle;">
+                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 100%;">
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <table cellpadding="0" cellspacing="0" border="0"
+                        style="width: 20px; height: 160px; border: none; border-right: 3px solid #000; margin: 0 auto;">
+                        <tr>
+                          <td style="width: 2px; height: 160px; border-radius: 4px;"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td style="background-color: #FFFFFF; vertical-align: top; padding: 0px 20px;">
+                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                  <tr>
+                    <td style="vertical-align: top; width: ${includeQRCode ? '80%' : '100%'}; max-width: 400px;">
+                      <h2
+                        style="margin: 0 0 0 0; font-size: 16px; font-weight: 900; color: #000000 !important; font-family: 'Poppins', Arial, sans-serif;">
+                        ${nome}
+                      </h2>
+                      <p
+                        style="margin: 0 0 8px 0; font-size: 13px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
+                        ${cargo}
+                      </p>
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                        <tr>
+                          <td style="width: 60px; height: 3px; background-color: #00CED1;"></td>
+                        </tr>
+                      </table>
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                        <tr>
+                          <td style="vertical-align: middle; padding-right: 10px;">
+                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/phone.png?raw=true"
+                              alt="Phone" style="width: 20px; height: 20px; display: block;">
+                          </td>
+                          <td style="vertical-align: middle;">
+                            <a href="https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!"
+                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                              + 55 ${telefone.replace(/(\d{2})(\d{2})(\d{4})(\d{4})/, '$1 $2 $3-$4')}
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                        <tr>
+                          <td style="vertical-align: middle; padding-right: 10px;">
+                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/mail.png?raw=true"
+                              alt="Email" style="width: 20px; height: 20px; display: block;">
+                          </td>
+                          <td style="vertical-align: middle;">
+                            <a href="mailto:${email}"
+                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                              ${email}
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                        <tr>
+                          <td style="vertical-align: middle; padding-right: 10px;">
+                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/site.png?raw=true"
+                              alt="Website" style="width: 20px; height: 20px; display: block;">
+                          </td>
+                          <td style="vertical-align: middle;">
+                            <a href="https://overlabs.com"
+                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                              overlabs.com
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px; width: max-content;">
+                        <tr>
+                          <td style="vertical-align: top; padding-right: 10px;">
+                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/loc.png?raw=true"
+                              alt="Location" style="width: 20px; height: 20px; display: block;">
+                          </td>
+                          <td style="vertical-align: top;">
+                            <span
+                              style="color: #000000;font-size: 13px;line-height: 1.65;font-family: 'Poppins', Arial, sans-serif;">
+                              Av. das Nações Unidas, 14261, Torre A, 5° Andar – São Paulo/SP – Brasil
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="vertical-align: middle; padding-right: 15px;">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                              <tr>
+                                <td style="width: 60px; height: 3px; background-color: #00CED1;"></td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td style="vertical-align: middle; padding-right: 10px;">
+                            <a href="https://linkedin.com/company/overlabs" style="text-decoration: none;">
+                              <img
+                                src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/linkedin.png?raw=true"
+                                alt="LinkedIn" style="width: 25px; height: 25px; display: block;">
+                            </a>
+                          </td>
+                          <td style="vertical-align: middle;">
+                            <a href="https://instagram.com/overlabs" style="text-decoration: none;">
+                              <img
+                                src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/instagram.png?raw=true"
+                                alt="Instagram" style="width: 25px; height: 25px; display: block;">
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+
+                    ${includeQRCode ? `
+                    <td style="vertical-align: top; width: 20%; text-align: right;">
+                      <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="vertical-align: middle; text-align: center;">
+                                                         <img src="${qrCodeDataUrl}"
+                               alt="QR Code WhatsApp"
+                               style="width: 120px; height: 120px; display: block; border: 2px solid #00CED1; border-radius: 6px; object-fit: contain;">
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    ` : ''}
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        `;
+
+        // Exibir preview
+        document.getElementById('signaturePreview').innerHTML = signatureHTML;
+        document.getElementById('copyBtn').style.display = 'block';
+
+        // Armazenar HTML para cópia
+        window.signatureHTML = signatureHTML;
+
+        // Restaurar botão
+        generateBtn.textContent = originalText;
+        generateBtn.disabled = false;
+      };
+
+      // Se QR Code for solicitado, gerar primeiro
+      if (includeQRCode) {
+        try {
+          // Gerar QR Code do WhatsApp usando API online
+          const whatsappUrl = `https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!`;
+          const encodedUrl = encodeURIComponent(whatsappUrl);
+
+          // Usar API do QR Server que é mais confiável
+          const qrCodeDataUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodedUrl}&format=png&margin=10&ecc=H`;
+
+          console.log('Gerando QR Code para:', whatsappUrl);
+          console.log('URL do QR Code:', qrCodeDataUrl);
+
+          // Gerar assinatura com QR Code
+          generateSignatureHTML(qrCodeDataUrl);
+        } catch (error) {
+          console.error('Erro ao gerar QR Code:', error);
+          // Gerar assinatura sem QR Code em caso de erro
+          generateSignatureHTML();
+        }
+      } else {
+        // Gerar assinatura sem QR Code
+        generateSignatureHTML();
+      }
+    }
+
+    // Função para copiar o HTML da assinatura de forma compatível com clientes de email
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      // Obter o HTML da assinatura
+      const previewElement = document.getElementById('signaturePreview');
+      const signatureHTML = previewElement.innerHTML;
+
+      // Criar uma versão limpa do HTML para compatibilidade com clientes de email
+      const cleanHTML = signatureHTML
+        .replace(/<tbody>/g, '')
+        .replace(/<\/tbody>/g, '')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      // Criar elemento temporário para copiar HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = cleanHTML;
+      tempDiv.style.position = 'fixed';
+      tempDiv.style.left = '-9999px';
+      tempDiv.style.top = '-9999px';
+      document.body.appendChild(tempDiv);
+
+      // Selecionar o conteúdo
+      const range = document.createRange();
+      range.selectNodeContents(tempDiv);
+
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Tentar copiar
+      try {
+        document.execCommand('copy');
+
+        // Feedback visual
+        const btn = this;
+        const originalText = btn.textContent;
+        btn.textContent = 'Assinatura Copiada!';
+        btn.style.background = '#00cfbf';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#0e4b4e';
+        }, 2000);
+      } catch (e) {
+        console.error('Erro ao copiar:', e);
+
+        // Feedback visual de erro
+        const btn = this;
+        const originalText = btn.textContent;
+        btn.textContent = 'Erro ao Copiar!';
+        btn.style.background = '#ff4d4d';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#0e4b4e';
+        }, 2000);
+      }
+
+      // Limpar
+      document.body.removeChild(tempDiv);
+      selection.removeAllRanges();
+    });
+
+    // Formatação automática do telefone
+    document.getElementById('telefone').addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0 && !value.startsWith('55')) {
+        value = '55' + value;
+      }
+      e.target.value = value;
+    });
+  </script>
+</body>
+
+</html>
