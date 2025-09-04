@@ -214,7 +214,7 @@
 
         <div class="form-group">
           <label for="telefone">Telefone WhatsApp</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 5511960625389" required>
+          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 11960625389" required>
         </div>
 
         <div class="form-group">
@@ -279,8 +279,13 @@
 
       const nome = document.getElementById('nome').value;
       const cargo = document.getElementById('cargo').value;
-      const telefone = document.getElementById('telefone').value;
+      let telefone = document.getElementById('telefone').value;
       const email = document.getElementById('email').value;
+
+      // Adicionar 55 automaticamente se não estiver presente
+      if (telefone && !telefone.startsWith('55')) {
+        telefone = '55' + telefone;
+      }
       const logo = document.getElementById('logo').value;
       const includeQRCode = document.getElementById('qrCode').value === 'true';
 
@@ -354,7 +359,7 @@
                           <td style="vertical-align: middle;">
                             <a href="https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!"
                               style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
-                              + 55 ${telefone.replace(/(\d{2})(\d{2})(\d{4})(\d{4})/, '$1 $2 $3-$4')}
+                              + ${telefone.replace(/(\d{2})(\d{2})(\d{4})(\d{4})/, '$1 $2 $3-$4')}
                             </a>
                           </td>
                         </tr>
@@ -415,7 +420,7 @@
                             </table>
                           </td>
                           <td style="vertical-align: middle; padding-right: 10px;">
-                            <a href="https://linkedin.com/company/overlabs" style="text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/overlabs-com" style="text-decoration: none;">
                               <img
                                 src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/linkedin.png?raw=true"
                                 alt="LinkedIn" style="width: 25px; height: 25px; display: block;">
@@ -557,9 +562,12 @@
     // Formatação automática do telefone
     document.getElementById('telefone').addEventListener('input', function (e) {
       let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 0 && !value.startsWith('55')) {
-        value = '55' + value;
+
+      // Limitar a 11 dígitos (DDD + número)
+      if (value.length > 11) {
+        value = value.substring(0, 11);
       }
+
       e.target.value = value;
     });
   </script>
