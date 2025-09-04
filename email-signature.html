@@ -10,95 +10,158 @@
 </head>
 
 <body style="margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif;">
-  <!-- Fixed table width to be compact instead of 100% width -->
-  <table cellpadding="0" cellspacing="0" border="0"
-    style="width: auto; max-width: 800px; border-collapse: collapse;">
+  <table cellpadding="0" cellspacing="0" border="0" style="width: auto; max-width: 750px; border-collapse: collapse;">
     <tr>
-      <!-- Fixed logo section width to be more compact -->
+      <!-- Logo Section -->
       <td style="background-color: #000000; vertical-align: middle; text-align: center;">
-        <!-- Logo Section -->
-        <img src="assets/logo/black.png" alt="Overlabs Logo" style="width: 220px; height: auto; object-fit: contain;">
+        <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/black.png?raw=true"
+          alt="Overlabs Logo" style="width: 200px; height: auto; object-fit: contain; display: block;">
       </td>
-      <!-- Reduced separator width -->
-      <td style="width: 40px; position: relative; background-color: #FFFFFF;">
-        <div
-          style="position: absolute; top: 10%; left: 50%; width: 2px; height: 80%; background-color: #000; border-radius: 4px;">
-        </div>
+
+      <!-- Vertical Divider -->
+      <td style="width: 40px; background-color: #FFFFFF; vertical-align: middle;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 100%;">
+          <tr>
+            <td style="vertical-align: middle; text-align: center;">
+              <table cellpadding="0" cellspacing="0" border="0"
+                style="width: 20px; height: 160px; border: none; border-right: 3px solid #000; margin: 0 auto;">
+                <tr>
+                  <td style="width: 2px; height: 160px; border-radius: 4px;"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </td>
-      <!-- Fixed content area width to be more compact -->
-      <td style="background-color: #FFFFFF; vertical-align: top; position: relative;">
-        <!-- QR Code -->
-        <div
-          style="position: absolute; top: 15px; right: 0px; width: 80px; height: 80px; border: 2px solid #00CED1; border-radius: 8px; background-color: #FFFFFF; display: flex; align-items: center; justify-content: center;">
-          <img src="assets/qrcode.png" alt="QR Code" style="width: 80px; height: 80px; display: block; border-radius: 8px;">
-        </div>
 
-        <!-- Contact Info -->
-        <div style="margin-top: 10px; margin-left: 0px;">
-          <h2
-            style="margin: 0; font-size: 18px; font-weight: 900; color: #000000; font-family: 'Poppins', Arial, sans-serif;">
-            LOREM IPSUM IPSUM
-          </h2>
-          <p style="margin: 0; font-size: 14px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
-            Lorem Ipsum Lorem
-          </p>
+      <!-- Content Section -->
+      <td style="background-color: #FFFFFF; vertical-align: top; padding: 0px 20px;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+          <tr>
+            <!-- Contact Info -->
+            <td style="vertical-align: top; width: 80%; max-width: 400px;">
+              <h2
+                style="margin: 0 0 0 0; font-size: 16px; font-weight: 900; color: #000000 !important; font-family: 'Poppins', Arial, sans-serif;">
+                Gustavo Henrique Scarpim Oliveira
+              </h2>
+              <p
+                style="margin: 0 0 8px 0; font-size: 13px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
+                Desenvolvedor Frontend
+              </p>
 
-          <!-- Divider -->
-          <div style="width: 60px; height: 2px; background-color: #00CED1; margin: 10px 0;"></div>
+              <!-- Divider -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td style="width: 60px; height: 3px; background-color: #00CED1;"></td>
+                </tr>
+              </table>
 
-          <!-- Phone -->
-          <div style="margin-bottom: 8px; display: flex; align-items: center;">
-            <img src="assets/icons/phone.png" alt="Phone"
-              style="width: 20px; height: 20px; margin-right: 10px; display: inline-block; vertical-align: middle;">
-            <a href="tel:+5511XXXXXXXX"
-              style="color: #000000; text-decoration: none; font-size: 14px; font-family: 'Poppins', Arial, sans-serif;">
-              + 55 11 XXXX-XXXX
-            </a>
-          </div>
+              <!-- Phone -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 10px;">
+                    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/phone.png?raw=true"
+                      alt="Phone" style="width: 20px; height: 20px; display: block;">
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <a href="tel:+5511XXXXXXXX"
+                      style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                      + 55 11 96062-5389
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-          <!-- Email and Website -->
-          <div style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 100px">
-            <div style="display: flex; align-items: center;">
-              <img src="assets/icons/mail.png" alt="Email"
-                style="width: 20px; height: 20px; margin-right: 10px; display: inline-block; vertical-align: middle;">
-              <a href="mailto:Lorem.ipsum@overlabs.com"
-                style="color: #000000; text-decoration: none; font-size: 14px; font-family: 'Poppins', Arial, sans-serif;">
-                Lorem.ipsum@overlabs.com
-              </a>
-            </div>
-            <div style="display: flex; align-items: center;">
-              <img src="assets/icons/site.png" alt="Website"
-                style="width: 20px; height: 20px; margin-right: 10px; display: inline-block; vertical-align: middle;">
-              <a href="https://overlabs.com"
-                style="color: #000000; text-decoration: none; font-size: 14px; font-family: 'Poppins', Arial, sans-serif;">
-                overlabs.com
-              </a>
-            </div>
-          </div>
+              <!-- Email -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 10px;">
+                    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/mail.png?raw=true"
+                      alt="Email" style="width: 20px; height: 20px; display: block;">
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <a href="mailto:Lorem.ipsum@overlabs.com"
+                      style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                      Lorem.ipsum@overlabs.com
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-          <!-- Address -->
-          <div style="margin-bottom: 15px; display: flex; align-items: flex-start;">
-            <img src="assets/icons/loc.png" alt="Location"
-              style="width: 20px; height: 20px; margin-right: 10px; margin-top: 2px; display: inline-block; vertical-align: top;">
-            <span style="color: #000000; font-size: 14px; line-height: 1.4; font-family: 'Poppins', Arial, sans-serif;">
-              Av. das Nações Unidas, 14261, Torre A, 5° Andar – São Paulo/SP – Brasil
-            </span>
-          </div>
+              <!-- Website -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 10px;">
+                    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/site.png?raw=true"
+                      alt="Website" style="width: 20px; height: 20px; display: block;">
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <a href="https://overlabs.com"
+                      style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
+                      overlabs.com
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-          <!-- Social Media -->
-          <div style="display: flex; align-items: center;">
-            <!-- Divider -->
-            <div style="width: 60px; height: 2px; background-color: #00CED1; margin-right: 10px; margin-top: -6px;"></div>
-            <a href="https://linkedin.com/company/overlabs" style="margin-right: 10px; text-decoration: none;">
-              <img src="assets/icons/linkedin.png" alt="LinkedIn"
-                style="width: 20px; height: 20px; display: inline-block;">
-            </a>
-            <a href="https://instagram.com/overlabs" style="margin-right: 10px; text-decoration: none;">
-              <img src="assets/icons/instagram.png" alt="Instagram"
-                style="width: 20px; height: 20px; display: inline-block;">
-            </a>
-          </div>
-        </div>
+              <!-- Address -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px; width: max-content;">
+                <tr>
+                  <td style="vertical-align: top; padding-right: 10px;">
+                    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/loc.png?raw=true"
+                      alt="Location" style="width: 20px; height: 20px; display: block;">
+                  </td>
+                  <td style="vertical-align: top;">
+                    <span
+                      style="color: #000000;font-size: 13px;line-height: 1.65;font-family: 'Poppins', Arial, sans-serif;">
+                      Av. das Nações Unidas, 14261, Torre A, 5° Andar – São Paulo/SP – Brasil
+                    </span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Social Media -->
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 15px;">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="width: 60px; height: 3px; background-color: #00CED1;"></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style="vertical-align: middle; padding-right: 10px;">
+                    <a href="https://linkedin.com/company/overlabs" style="text-decoration: none;">
+                      <img
+                        src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/linkedin.png?raw=true"
+                        alt="LinkedIn" style="width: 25px; height: 25px; display: block;">
+                    </a>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <a href="https://instagram.com/overlabs" style="text-decoration: none;">
+                      <img
+                        src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/instagram.png?raw=true"
+                        alt="Instagram" style="width: 25px; height: 25px; display: block;">
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <!-- QR Code -->
+            <td style="vertical-align: top; width: 20%; text-align: right;">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align: middle; text-align: center;">
+                    <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/qrcode.png?raw=true"
+                      alt="QR Code"
+                      style="width: 80px; height: 80px; display: block; border: 2px solid #00CED1; border-radius: 6px;">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </td>
     </tr>
   </table>
