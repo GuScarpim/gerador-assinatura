@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerador de Assinatura de Email - Overlabs</title>
-  <link rel="icon" type="image/svg+xml" href="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/OS.svg?raw=true">
+  <link rel="icon" type="image/svg+xml"
+    href="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/OS.svg?raw=true">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap"
     rel="stylesheet">
 
@@ -147,6 +148,102 @@
       max-width: 750px;
     }
 
+    .logo-preview-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .logo-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+      min-width: 80px;
+    }
+
+    .logo-option:hover {
+      border-color: #00beb2;
+      transform: translateY(-2px);
+    }
+
+    .logo-option.active {
+      border-color: #00beb2;
+      background: #f0f9f8;
+    }
+
+    .logo-preview {
+      width: 40px;
+      height: auto;
+      margin-bottom: 5px;
+    }
+
+    .logo-option span {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      display: none;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e1e5e9;
+      border-radius: 4px;
+      margin-right: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark {
+      background: #00beb2;
+      border-color: #00beb2;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .phone-fields,
+    .qr-fields {
+      transition: all 0.3s ease;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    .phone-fields.show,
+    .qr-fields.show {
+      opacity: 1;
+      max-height: 100px;
+    }
+
     .qr-code-container {
       text-align: center;
       margin-top: 20px;
@@ -214,10 +311,6 @@
           <input type="text" id="cargo" name="cargo" placeholder="Ex: Desenvolvedor Frontend" required>
         </div>
 
-        <div class="form-group">
-          <label for="telefone">Telefone WhatsApp</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 11960625389" required>
-        </div>
 
         <div class="form-group">
           <label for="email">Email</label>
@@ -225,20 +318,46 @@
         </div>
 
         <div class="form-group">
-          <label for="logo">Logo</label>
-          <select id="logo" name="logo" required>
-            <option value="black">Logo Preto</option>
-            <option value="tiffany">Logo Tiffany</option>
-            <option value="white">Logo Branco</option>
-          </select>
+          <label for="logo">Escolha o seu Logo</label>
+          <div class="logo-preview-container">
+            <div class="logo-option active" data-value="black">
+              <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/black.png"
+                alt="Black Logo" class="logo-preview">
+              <span>Logo Preto</span>
+            </div>
+            <div class="logo-option" data-value="tiffany">
+              <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/tiffany.png"
+                alt="Tiffany Logo" class="logo-preview">
+              <span>Logo Tiffany</span>
+            </div>
+            <div class="logo-option" data-value="white">
+              <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/white.png"
+                alt="White Logo" class="logo-preview">
+              <span>Logo Branco</span>
+            </div>
+          </div>
+          <input type="hidden" id="logo" name="logo" value="black">
         </div>
 
         <div class="form-group">
-          <label for="qrCode">QR Code WhatsApp</label>
-          <select id="qrCode" name="qrCode" required>
-            <option value="true">Sim</option>
-            <option value="false">Não</option>
-          </select>
+          <label class="checkbox-label">
+            <input type="checkbox" id="addPhone" name="addPhone">
+            <span class="checkmark"></span>
+            Deseja adicionar o seu celular?
+          </label>
+        </div>
+
+        <div class="form-group phone-fields" style="display: none;">
+          <label for="telefone">Telefone WhatsApp</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 11960625389">
+        </div>
+
+        <div class="form-group qr-fields" style="display: none;">
+          <label class="checkbox-label">
+            <input type="checkbox" id="addQRCode" name="addQRCode" checked>
+            <span class="checkmark"></span>
+            Adicionar QR Code WhatsApp
+          </label>
         </div>
 
         <button type="submit" class="btn" id="generateBtn">Gerar Assinatura</button>
@@ -271,6 +390,43 @@
       generateSignature();
     });
 
+    // Logo selection
+    document.querySelectorAll('.logo-option').forEach(option => {
+      option.addEventListener('click', function () {
+        // Remove active class from all options
+        document.querySelectorAll('.logo-option').forEach(opt => opt.classList.remove('active'));
+        // Add active class to clicked option
+        this.classList.add('active');
+        // Update hidden input value
+        document.getElementById('logo').value = this.dataset.value;
+      });
+    });
+
+    // Phone fields toggle
+    document.getElementById('addPhone').addEventListener('change', function () {
+      const phoneFields = document.querySelector('.phone-fields');
+      const qrFields = document.querySelector('.qr-fields');
+
+      if (this.checked) {
+        phoneFields.style.display = 'block';
+        phoneFields.classList.add('show');
+        qrFields.style.display = 'block';
+        qrFields.classList.add('show');
+      } else {
+        phoneFields.classList.remove('show');
+        qrFields.classList.remove('show');
+        setTimeout(() => {
+          phoneFields.style.display = 'none';
+          qrFields.style.display = 'none';
+        }, 300);
+      }
+    });
+
+    // QR Code toggle
+    document.getElementById('addQRCode').addEventListener('change', function () {
+      // Este checkbox controla se o QR Code será gerado quando o telefone estiver preenchido
+    });
+
     async function generateSignature() {
       const generateBtn = document.getElementById('generateBtn');
       const originalText = generateBtn.textContent;
@@ -281,131 +437,147 @@
 
       const nome = document.getElementById('nome').value;
       const cargo = document.getElementById('cargo').value;
-      let telefone = document.getElementById('telefone').value;
       const email = document.getElementById('email').value;
+      const logo = document.getElementById('logo').value;
+      const addPhone = document.getElementById('addPhone').checked;
+      const addQRCode = document.getElementById('addQRCode').checked;
+      let telefone = document.getElementById('telefone').value.trim();
 
       // Adicionar 55 automaticamente se não estiver presente
       if (telefone && !telefone.startsWith('55')) {
         telefone = '55' + telefone;
       }
-      const logo = document.getElementById('logo').value;
-      const includeQRCode = document.getElementById('qrCode').value === 'true';
+
+      const includeQRCode = addPhone && addQRCode && telefone.length > 0; // Mostrar QR code apenas se ambos checkboxes estiverem marcados e telefone preenchido
 
       // Função para gerar a assinatura
       const generateSignatureHTML = (qrCodeDataUrl = null) => {
-        // Determinar a URL do logo baseado na seleção
+        // Determinar a URL do logo baseado na seleção (usando URLs diretas do GitHub)
         let logoUrl;
         switch (logo) {
           case 'black':
-            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/black.png?raw=true';
+            logoUrl = 'https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/black.png';
             break;
           case 'tiffany':
-            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/tiffany.png?raw=true';
+            logoUrl = 'https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/tiffany.png';
             break;
           case 'white':
-            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/white.png?raw=true';
+            logoUrl = 'https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/white.png';
             break;
           default:
-            logoUrl = 'https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/logo/black.png?raw=true';
+            logoUrl = 'https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/logo/black.png';
         }
 
         // Gerar HTML da assinatura
         const signatureHTML = `
-          <table cellpadding="0" cellspacing="0" border="0" style="width: auto; max-width: 750px; border-collapse: collapse;">
+                     <table cellpadding="0" cellspacing="0" border="0" style="min-width: 820px; max-width: 2000px; border-collapse: collapse;">
             <tr>
-              <td style="vertical-align: middle; text-align: center;">
-                <img src="${logoUrl}"
-                  alt="Overlabs Logo" style="width: 200px; height: auto; display: block;">
-              </td>
+                             <td style="vertical-align: middle; text-align: center; width: 20px;">
+                 <img src="${logoUrl}"
+                   alt="Overlabs Logo" style="min-width: 120px;min-height: 120px;display: block;max-width: 120px;max-width: 120px;"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+               </td>
 
-              <td style="width: 40px; background-color: #FFFFFF; vertical-align: middle;">
-                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 100%;">
-                  <tr>
-                    <td style="vertical-align: middle; text-align: center;">
-                      <table cellpadding="0" cellspacing="0" border="0"
-                        style="width: 20px; height: 160px; border: none; border-right: 3px solid #000; margin: 0 auto;">
-                        <tr>
-                          <td style="width: 2px; height: 160px; border-radius: 4px;"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
+                             <td style="width: 0px; vertical-align: middle;">
+                 <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 100%;">
+                   <tr>
+                     <td style="vertical-align: middle; text-align: center;">
+                       <table cellpadding="0" cellspacing="0" border="0"
+                         style="width: 15px; height: 80px; border: none; border-right: 2px solid #000; margin: 0 auto;">
+                         <tr>
+                           <td style="width: 2px; height: 80px; border-radius: 4px;"></td>
+                         </tr>
+                       </table>
+                     </td>
+                   </tr>
+                 </table>
+               </td>
 
-              <td style="background-color: #FFFFFF; vertical-align: top; padding: 0px 20px;">
+                             <td style="vertical-align: top; padding: 0px 10px;">
                 <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
                   <tr>
                     <td style="vertical-align: top; width: ${includeQRCode ? '80%' : '100%'}; max-width: 400px;">
-                      <h2
-                        style="margin: 0 0 0 0; font-size: 16px; font-weight: 900; color: #000000 !important; font-family: 'Poppins', Arial, sans-serif;">
-                        ${nome}
-                      </h2>
-                      <p
-                        style="margin: 0 0 8px 0; font-size: 13px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
-                        ${cargo}
-                      </p>
+                                             <h2
+                         style="margin: 0 0 0 0; font-size: 14px; font-weight: 900; color: #000000 !important; font-family: 'Poppins', Arial, sans-serif;">
+                         ${nome}
+                       </h2>
+                                             <p
+                         style="margin: 0 0 4px 0; font-size: 12px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
+                         ${cargo}
+                       </p>
 
-                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 4px;">
                         <tr>
                           <td style="width: 60px; height: 3px; background-color: #00CED1;"></td>
                         </tr>
                       </table>
 
-                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                      ${addPhone && telefone ? `
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 4px;">
                         <tr>
                           <td style="vertical-align: middle; padding-right: 10px;">
-                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/phone.png?raw=true"
-                              alt="Phone" style="width: 20px; height: 20px; display: block;">
+                                                                                      <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/phone.png"
+                               alt="Phone" style="width: 16px; height: 16px; display: block;">
                           </td>
                           <td style="vertical-align: middle;">
                             <a href="https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!"
-                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
-                              + ${telefone.replace(/(\d{2})(\d{2})(\d{4})(\d{4})/, '$1 $2 $3-$4')}
+                               style="color: #000000; text-decoration: none; font-size: 12px; font-family: 'Poppins', Arial, sans-serif;">
+                               + ${telefone.replace(/(\d{2})(\d{2})(\d{4})(\d{4})/, '$1 $2 $3-$4')}
                             </a>
                           </td>
                         </tr>
                       </table>
+                      ` : ''}
 
-                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
-                        <tr>
-                          <td style="vertical-align: middle; padding-right: 10px;">
-                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/mail.png?raw=true"
-                              alt="Email" style="width: 20px; height: 20px; display: block;">
-                          </td>
-                          <td style="vertical-align: middle;">
-                            <a href="mailto:${email}"
-                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
-                              ${email}
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
+                     <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:4px;width:100%; max-width: 460px; border-collapse: collapse;">
+                      <tr>
+                        <td style="vertical-align:top;font-family:'Poppins',Arial,sans-serif;font-size:12px;line-height: 16px;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                              <td style="vertical-align:top;padding-right:8px;padding-top:1px;">
+                                <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/mail.png"
+                                    width="16" height="16" style="display:block;border:0;outline:none;text-decoration:none;" alt="Email">
+                              </td>
+                              <td style="vertical-align:top;">
+                                                                 <a href="mailto:${email}" style="color:#000000;text-decoration:none;font-size:12px;line-height:16px;">
+                                   ${email}
+                                 </a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td style="vertical-align:top;text-align:right;font-family:'Poppins',Arial,sans-serif;font-size:12px;line-height: 16px;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                              <td style="vertical-align:top;padding-right:8px;padding-top:1px;">
+                                <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/site.png"
+                                    width="16" height="16" style="display:block;border:0;outline:none;text-decoration:none;" alt="Site">
+                              </td>
+                              <td style="vertical-align:top;">
+                                <a href="https://overlabs.com" style="color:#000000;text-decoration:none;font-size:12px;line-height:16px;">
+                                  overlabs.com
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
-                        <tr>
-                          <td style="vertical-align: middle; padding-right: 10px;">
-                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/site.png?raw=true"
-                              alt="Website" style="width: 20px; height: 20px; display: block;">
-                          </td>
-                          <td style="vertical-align: middle;">
-                            <a href="https://overlabs.com"
-                              style="color: #000000; text-decoration: none; font-size: 13px; font-family: 'Poppins', Arial, sans-serif;">
-                              overlabs.com
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
 
-                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px; width: max-content;">
+
+
+
+
+                      <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 4px; width: max-content;">
                         <tr>
                           <td style="vertical-align: top; padding-right: 10px;">
-                            <img src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/loc.png?raw=true"
-                              alt="Location" style="width: 20px; height: 20px; display: block;">
+                                                                                      <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/loc.png"
+                               alt="Location" style="width: 16px; height: 16px; display: block;">
                           </td>
                           <td style="vertical-align: top;">
                             <span
-                              style="color: #000000;font-size: 13px;line-height: 1.65;font-family: 'Poppins', Arial, sans-serif;">
+                                                             style="color: #000000;font-size: 12px;line-height: 1.65;font-family: 'Poppins', Arial, sans-serif;">
                               Av. das Nações Unidas, 14261, Torre A, 5° Andar – São Paulo/SP – Brasil
                             </span>
                           </td>
@@ -424,15 +596,15 @@
                           <td style="vertical-align: middle; padding-right: 10px;">
                             <a href="https://www.linkedin.com/company/overlabs-com" style="text-decoration: none;">
                               <img
-                                src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/linkedin.png?raw=true"
-                                alt="LinkedIn" style="width: 25px; height: 25px; display: block;">
+                                                                 src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/linkedin.png"
+                                alt="LinkedIn" style="width: 20px; height: 20px; display: block;">
                             </a>
                           </td>
                           <td style="vertical-align: middle;">
-                            <a href="https://instagram.com/overlabs" style="text-decoration: none;">
+                            <a href="https://www.instagram.com/overlabs.tech" style="text-decoration: none;">
                               <img
-                                src="https://github.com/GuScarpim/gerador-assinatura/blob/main/assets/icons/instagram.png?raw=true"
-                                alt="Instagram" style="width: 25px; height: 25px; display: block;">
+                                                                 src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/instagram.png"
+                                alt="Instagram" style="width: 20px; height: 20px; display: block;">
                             </a>
                           </td>
                         </tr>
@@ -444,9 +616,9 @@
                       <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td style="vertical-align: middle; text-align: center;">
-                                                         <img src="${qrCodeDataUrl}"
-                               alt="QR Code WhatsApp"
-                               style="width: 120px; height: 120px; display: block; border: 2px solid #00CED1; border-radius: 6px; object-fit: contain;">
+                            <img src="${qrCodeDataUrl}"
+                                alt="QR Code WhatsApp"
+                                style="width: 75px; height: 75px; display: block; border: 2px solid #00CED1; border-radius: 6px; object-fit: contain;">
                           </td>
                         </tr>
                       </table>
@@ -471,8 +643,8 @@
         generateBtn.disabled = false;
       };
 
-      // Se QR Code for solicitado, gerar primeiro
-      if (includeQRCode) {
+      // Se QR Code for solicitado, gerar primeiro (apenas se telefone for preenchido)
+      if (includeQRCode && telefone) {
         try {
           // Gerar QR Code do WhatsApp usando API online
           const whatsappUrl = `https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!`;
