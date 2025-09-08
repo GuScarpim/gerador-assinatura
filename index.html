@@ -136,6 +136,12 @@
       background: #00948d;
     }
 
+    .download-guide-btn:hover {
+      background: #00948d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 190, 178, 0.3);
+    }
+
     .signature-preview {
       border: 2px solid #e1e5e9;
       border-radius: 10px;
@@ -363,6 +369,23 @@
 
         <button type="submit" class="btn" id="generateBtn">Gerar Assinatura</button>
       </form>
+
+      <!-- Mensagem de instruções -->
+      <div style="margin-top: 25px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #00beb2;">
+        <h3 style="margin: 0 0 10px 0; color: #333; font-size: 16px; font-weight: 600;">
+          📋 Como adicionar a assinatura no seu email
+        </h3>
+        <p style="margin: 0 0 15px 0; color: #666; font-size: 14px; line-height: 1.5;">
+          Baixe o guia completo com instruções passo a passo para configurar sua nova assinatura no Outlook, Gmail e outros clientes de email.
+        </p>
+        <a href="assets/Overlabs - Passo a Passo Troca de Assinatura.pdf" 
+           download="Overlabs - Passo a Passo Troca de Assinatura.pdf"
+           class="download-guide-btn"
+           style="display: inline-flex; align-items: center; gap: 8px; background: #00beb2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: all 0.3s ease;">
+          <span>📄</span>
+          Baixar Guia Completo
+        </a>
+      </div>
     </div>
 
     <!-- Preview -->
@@ -372,6 +395,15 @@
       <div class="signature-preview" id="signaturePreview">
         <p style="text-align: center; color: #666; font-style: italic;">
           Preencha o formulário para ver a preview da sua assinatura
+        </p>
+      </div>
+      
+      <!-- Mensagem informativa sobre alinhamento -->
+      <div id="alignmentInfo" style="display: none; margin-top: 15px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px;">
+        <p style="margin: 0; color: #856404; font-size: 13px; line-height: 1.4;">
+          <strong>ℹ️ Informação:</strong> Os textos podem aparecer desalinhados no preview, mas isso é normal. 
+          Quando você copiar e colar a assinatura no seu cliente de email (Outlook, Gmail, etc.), 
+          os elementos ficarão perfeitamente alinhados conforme o design original.
         </p>
       </div>
 
@@ -635,6 +667,7 @@
         // Exibir preview
         document.getElementById('signaturePreview').innerHTML = signatureHTML;
         document.getElementById('copyBtn').style.display = 'block';
+        document.getElementById('alignmentInfo').style.display = 'block';
 
         // Armazenar HTML para cópia
         window.signatureHTML = signatureHTML;
