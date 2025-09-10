@@ -309,18 +309,18 @@
 
       <form id="signatureForm">
         <div class="form-group">
-          <label for="nome">Nome Completo</label>
+          <label for="nome">Nome Completo*</label>
           <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
         </div>
 
         <div class="form-group">
           <label for="cargo">Cargo</label>
-          <input type="text" id="cargo" name="cargo" placeholder="Ex: Desenvolvedor Frontend" required>
+          <input type="text" id="cargo" name="cargo" placeholder="Ex: Desenvolvedor Frontend">
         </div>
 
 
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">Email*</label>
           <input type="email" id="email" name="email" placeholder="seu.email@overlabs.com" required>
         </div>
 
@@ -534,10 +534,10 @@
                          style="margin: 0 0 0 0; font-size: 14px; font-weight: 900; color: #000000 !important; font-family: 'Poppins', Arial, sans-serif;">
                          ${nome}
                        </h2>
-                                             <p
+                       ${cargo ? `<p
                          style="margin: 0 0 4px 0; font-size: 12px; color: #666666; font-family: 'Poppins', Arial, sans-serif;">
                          ${cargo}
-                       </p>
+                       </p>` : ''}
 
                       <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 4px;">
                         <tr>
