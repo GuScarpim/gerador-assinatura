@@ -378,6 +378,10 @@
         <p style="margin: 0 0 15px 0; color: #666; font-size: 14px; line-height: 1.5;">
           Baixe o guia completo com instruções passo a passo para configurar sua nova assinatura no Outlook, Gmail e outros clientes de email.
         </p>
+        <p style="margin: 0 0 15px 0; color: #856404; font-size: 13px; line-height: 1.4; background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 3px solid #ffc107;">
+          <strong>💡 Dica para Outlook Classic:</strong> Se você usa Outlook Classic e as imagens não aparecem ou ficam grandes, 
+          certifique-se de que o Outlook está configurado para exibir imagens automaticamente nas configurações de segurança.
+        </p>
         <a href="assets/Overlabs - Passo a Passo Troca de Assinatura.pdf" 
            download="Overlabs - Passo a Passo Troca de Assinatura.pdf"
            class="download-guide-btn"
@@ -505,9 +509,12 @@
         const signatureHTML = `
                      <table cellpadding="0" cellspacing="0" border="0" style="min-width: 820px; max-width: 2000px; border-collapse: collapse;">
             <tr>
-                             <td style="vertical-align: middle; text-align: center; width: 20px;">
+                             <td style="vertical-align: middle; text-align: center; width: 120px;">
                  <img src="${logoUrl}"
-                   alt="Overlabs Logo" style="min-width: 120px;min-height: 120px;display: block;max-width: 120px;max-width: 120px;"
+                   alt="Overlabs Logo" 
+                   width="120" 
+                   height="120"
+                   style="display: block; border: 0; outline: none; text-decoration: none; max-width: 120px; max-height: 120px;"
                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                </td>
 
@@ -550,7 +557,10 @@
                         <tr>
                           <td style="vertical-align: middle; padding-right: 10px;">
                                                                                       <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/phone.png"
-                               alt="Phone" style="width: 16px; height: 16px; display: block;">
+                               alt="Phone" 
+                               width="16" 
+                               height="16"
+                               style="display: block; border: 0; outline: none; text-decoration: none;">
                           </td>
                           <td style="vertical-align: middle;">
                             <a href="https://api.whatsapp.com/send?phone=${telefone}&text=Ol%C3%A1!"
@@ -569,7 +579,10 @@
                             <tr>
                               <td style="vertical-align:top;padding-right:8px;padding-top:1px;">
                                 <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/mail.png"
-                                    width="16" height="16" style="display:block;border:0;outline:none;text-decoration:none;" alt="Email">
+                                    width="16" 
+                                    height="16" 
+                                    style="display:block;border:0;outline:none;text-decoration:none;" 
+                                    alt="Email">
                               </td>
                               <td style="vertical-align:top;">
                                                                  <a href="mailto:${email}" style="color:#000000;text-decoration:none;font-size:12px;line-height:16px;">
@@ -584,7 +597,10 @@
                             <tr>
                               <td style="vertical-align:top;padding-right:8px;padding-top:1px;">
                                 <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/site.png"
-                                    width="16" height="16" style="display:block;border:0;outline:none;text-decoration:none;" alt="Site">
+                                    width="16" 
+                                    height="16" 
+                                    style="display:block;border:0;outline:none;text-decoration:none;" 
+                                    alt="Site">
                               </td>
                               <td style="vertical-align:top;">
                                 <a href="https://overlabs.com" style="color:#000000;text-decoration:none;font-size:12px;line-height:16px;">
@@ -606,7 +622,10 @@
                         <tr>
                           <td style="vertical-align: top; padding-right: 10px;">
                                                                                       <img src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/loc.png"
-                               alt="Location" style="width: 16px; height: 16px; display: block;">
+                               alt="Location" 
+                               width="16" 
+                               height="16"
+                               style="display: block; border: 0; outline: none; text-decoration: none;">
                           </td>
                           <td style="vertical-align: top;">
                             <span
@@ -630,14 +649,20 @@
                             <a href="https://www.linkedin.com/company/overlabs-com" style="text-decoration: none;">
                               <img
                                                                  src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/linkedin.png"
-                                alt="LinkedIn" style="width: 20px; height: 20px; display: block;">
+                                alt="LinkedIn" 
+                                width="20" 
+                                height="20"
+                                style="display: block; border: 0; outline: none; text-decoration: none;">
                             </a>
                           </td>
                           <td style="vertical-align: middle;">
                             <a href="https://www.instagram.com/overlabs.tech" style="text-decoration: none;">
                               <img
                                                                  src="https://raw.githubusercontent.com/GuScarpim/gerador-assinatura/main/assets/icons/instagram.png"
-                                alt="Instagram" style="width: 20px; height: 20px; display: block;">
+                                alt="Instagram" 
+                                width="20" 
+                                height="20"
+                                style="display: block; border: 0; outline: none; text-decoration: none;">
                             </a>
                           </td>
                         </tr>
@@ -651,7 +676,9 @@
                           <td style="vertical-align: middle; text-align: center;">
                             <img src="${qrCodeDataUrl}"
                                 alt="QR Code WhatsApp"
-                                style="width: 75px; height: 75px; display: block; border: 2px solid #00CED1; border-radius: 6px; object-fit: contain;">
+                                width="75" 
+                                height="75"
+                                style="display: block; border: 2px solid #00CED1; border-radius: 6px; object-fit: contain;">
                           </td>
                         </tr>
                       </table>
